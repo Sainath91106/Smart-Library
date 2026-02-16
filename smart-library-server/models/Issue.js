@@ -34,6 +34,15 @@ const issueSchema = new mongoose.Schema(
       default: 0,
       min: 0,
     },
+    penaltyAmount: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    penaltyPaid: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

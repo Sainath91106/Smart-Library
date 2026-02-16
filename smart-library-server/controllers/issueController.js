@@ -108,8 +108,20 @@ const returnBook = async (req, res) => {
         throw new Error('BOOK_NOT_FOUND');
       }
 
-      issue.returnDate = new Date();
+      const returnDate = new Date();
+      const dueDate = new Date(issue.dueDate);
+      
+      // Calculate penalty if returned late
+      let penaltyAmount = 0;
+      if (returnDate > dueDate) {
+        const daysLate = Math.ceil((returnDate - dueDate) / (1000 * 60 * 60 * 24));
+        penaltyAmount = daysLate * 5; // ₹5 per day
+      }
+
+      issue.returnDate = returnDate;
       issue.status = 'returned';
+      issue.penaltyAmount = penaltyAmount;
+      issue.penaltyPaid = penaltyAmount === 0; // Auto-mark as paid if no penalty
       updatedIssue = await issue.save({ session });
 
       book.availableCopies += 1;
@@ -161,7 +173,43 @@ const getMyIssues = async (req, res) => {
       .populate('userId', 'name email')
       .sort({ createdAt: -1 });
 
-    return res.status(200).json({ issues });
+    // Extend each issue with overdue detection fields
+    const today = new Date();
+    const enrichedIssues = issues.map((issue) => {
+      const issueObj = issue.toObject();
+      
+      // Only calculate overdue for issued books (not returned)
+      if (issueObj.status === 'issued' || issueObj.status === 'overdue') {
+        const dueDate = new Date(issueObj.dueDate);
+        const diffTime = dueDate - today;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        const isOverdue = diffDays < 0;
+        const daysOverdueCount = isOverdue ? Math.abs(diffDays) : 0;
+        
+        // Calculate current penalty for overdue books
+        const currentPenalty = isOverdue ? daysOverdueCount * 5 : 0;
+        
+        return {
+          ...issueObj,
+          isOverdue,
+          daysLeft: isOverdue ? 0 : diffDays,
+          daysOverdue: daysOverdueCount,
+          currentPenalty, // Real-time penalty for overdue books
+        };
+      }
+      
+      // For returned books, use stored penalty amount
+      return {
+        ...issueObj,
+        isOverdue: false,
+        daysLeft: 0,
+        daysOverdue: 0,
+        currentPenalty: issueObj.penaltyAmount || 0,
+      };
+    });
+
+    return res.status(200).json({ issues: enrichedIssues });
   } catch (error) {
     return res.status(500).json({ message: 'Server error', error: error.message });
   }

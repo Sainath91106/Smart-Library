@@ -56,9 +56,11 @@ const getOverdueBooks = async (req, res) => {
 
     const overdueWithDays = overdueIssues.map((issue) => {
       const daysOverdue = Math.floor((today - new Date(issue.dueDate)) / (1000 * 60 * 60 * 24));
+      const penaltyAmount = daysOverdue * 5; // ₹5 per day
       return {
         ...issue.toObject(),
         daysOverdue,
+        penaltyAmount,
       };
     });
 

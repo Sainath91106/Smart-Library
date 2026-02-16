@@ -55,37 +55,37 @@ function Signup() {
         <main className="bg-gradient-mesh animate-fade-in min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
             {/* Animated background orbs */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute -left-32 top-1/4 w-72 h-72 rounded-full bg-emerald-500/10 blur-[60px] animate-float" />
-                <div className="absolute -right-32 bottom-1/4 w-72 h-72 rounded-full bg-purple-500/10 blur-[60px] animate-float-delayed" />
+                <div className="absolute -left-32 top-1/4 w-80 h-80 rounded-full bg-gradient-to-r from-emerald-300 to-teal-300/40 blur-[80px] animate-float" />
+                <div className="absolute -right-32 bottom-1/4 w-80 h-80 rounded-full bg-gradient-to-r from-purple-300 to-pink-300/40 blur-[80px] animate-float-delayed" />
             </div>
 
-            <div className="glass animate-fade-in-up relative w-full max-w-md rounded-3xl p-10 shadow-2xl shadow-indigo-500/10">
+            <div className="glass animate-fade-in-up relative w-full max-w-md rounded-3xl p-10 shadow-2xl">
                 {/* Logo header */}
                 <div className="mb-8 text-center">
-                    <div className="mx-auto mb-4 flex w-14 h-14 items-center justify-center rounded-2xl bg-gradient-brand text-2xl shadow-lg shadow-indigo-500/30">
+                    <div className="mx-auto mb-4 flex w-16 h-16 items-center justify-center rounded-2xl bg-gradient-brand text-3xl shadow-lg shadow-indigo-400/40">
                         ✨
                     </div>
-                    <h1 className="text-2xl font-bold text-white">Create Account</h1>
-                    <p className="mt-2 text-sm text-slate-400">
+                    <h1 className="text-3xl font-bold text-slate-800">Create Account</h1>
+                    <p className="mt-2 text-sm text-slate-600">
                         Join{' '}
-                        <span className="font-medium text-gradient">
+                        <span className="font-semibold text-gradient">
                             Smart Library
                         </span>
                     </p>
                 </div>
                 
                 {/* Registration Type Tabs */}
-                <div className="mb-6 flex gap-2 p-1 rounded-xl bg-white/5 border border-white/10">
+                <div className="mb-6 flex gap-2 p-1.5 rounded-xl bg-slate-100 border border-slate-200">
                     <button
                         type="button"
                         onClick={() => {
                             setRegistrationType('student');
                             setError('');
                         }}
-                        className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-semibold transition-all ${
+                        className={`flex-1 py-3 px-4 rounded-lg text-sm font-bold transition-all ${
                             registrationType === 'student'
-                                ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/30'
-                                : 'text-slate-400 hover:text-white'
+                                ? 'bg-gradient-to-r from-indigo-500 to-indigo-600 text-white shadow-lg shadow-indigo-400/40'
+                                : 'text-slate-600 hover:text-slate-800 hover:bg-white'
                         }`}
                     >
                         🎓 Student
@@ -96,10 +96,10 @@ function Signup() {
                             setRegistrationType('admin');
                             setError('');
                         }}
-                        className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-semibold transition-all ${
+                        className={`flex-1 py-3 px-4 rounded-lg text-sm font-bold transition-all ${
                             registrationType === 'admin'
-                                ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/30'
-                                : 'text-slate-400 hover:text-white'
+                                ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-400/40'
+                                : 'text-slate-600 hover:text-slate-800 hover:bg-white'
                         }`}
                     >
                         👨‍💼 Admin
@@ -153,7 +153,7 @@ function Signup() {
                     </div>
 
                     {error && (
-                        <div className="animate-fade-in rounded-xl bg-red-500/10 p-3 text-sm text-red-400 border border-red-500/20">
+                        <div className="animate-fade-in rounded-xl bg-red-50 p-3 text-sm text-red-600 border border-red-200 font-medium">
                             {error}
                         </div>
                     )}
@@ -178,11 +178,11 @@ function Signup() {
                 </form>
 
                 {/* Link to login */}
-                <p className="mt-6 text-center text-sm text-slate-400">
+                <p className="mt-6 text-center text-sm text-slate-600">
                     Already have an account?{' '}
                     <Link
                         to="/login"
-                        className="font-medium text-indigo-400 hover:text-purple-400 transition-colors"
+                        className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transition-all"
                     >
                         Sign in
                     </Link>
