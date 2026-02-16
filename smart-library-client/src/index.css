@@ -1,0 +1,277 @@
+@import "tailwindcss";
+
+/* ── Design tokens ─────────────────────────────────────── */
+:root {
+  --clr-primary: 37 99 235;
+  --clr-accent: 124 58 237;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #0f172a;
+  color: #f8fafc;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Utility keyframes ─────────────────────────────────── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDownIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Reusable animation classes ────────────────────────── */
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out both;
+}
+
+.animate-slide-down {
+  animation: slideDownIn 0.35s ease-out both;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 8s ease-in-out infinite 1s;
+}
+
+.animate-spin-slow {
+  animation: spin 3s linear infinite;
+}
+
+.animate-spin-fast {
+  animation: spin 1s linear infinite;
+}
+
+/* stagger children */
+.stagger>*:nth-child(1) {
+  animation-delay: 0ms;
+}
+
+.stagger>*:nth-child(2) {
+  animation-delay: 80ms;
+}
+
+.stagger>*:nth-child(3) {
+  animation-delay: 160ms;
+}
+
+.stagger>*:nth-child(4) {
+  animation-delay: 240ms;
+}
+
+.stagger>*:nth-child(5) {
+  animation-delay: 320ms;
+}
+
+.stagger>*:nth-child(6) {
+  animation-delay: 400ms;
+}
+
+.stagger>*:nth-child(7) {
+  animation-delay: 480ms;
+}
+
+.stagger>*:nth-child(8) {
+  animation-delay: 560ms;
+}
+
+.stagger>*:nth-child(9) {
+  animation-delay: 640ms;
+}
+
+/* ── Glassmorphism utility ─────────────────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Gradient backgrounds ──────────────────────────────── */
+.bg-gradient-mesh {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(124, 58, 237, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+    linear-gradient(to bottom, #0f172a, #1e293b);
+}
+
+.bg-gradient-brand {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+}
+
+.bg-gradient-success {
+  background: linear-gradient(to right, #10b981, #2563eb);
+}
+
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to right, #2563eb, #7c3aed);
+}
+
+/* ── Custom Component Classes ──────────────────────────── */
+
+.btn-primary {
+  @apply w-full rounded-xl py-3 px-4 text-sm font-semibold text-white border-0 cursor-pointer shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+}
+
+.btn-primary:not(:disabled):hover {
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-success {
+  @apply w-full rounded-xl py-3 px-4 text-sm font-semibold text-white border-0 cursor-pointer shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed;
+  background: linear-gradient(to right, #10b981, #2563eb);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+}
+
+.btn-success:not(:disabled):hover {
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+  transform: translateY(-1px);
+}
+
+.input-field {
+  @apply w-full rounded-xl border border-white/10 bg-white/5 py-3 px-4 text-sm text-white outline-none transition-all duration-300 placeholder:text-slate-400 focus:border-indigo-500/50 focus:bg-white/8 focus:ring-2 focus:ring-indigo-500/20;
+}
+
+.label-text {
+  @apply block mb-1.5 text-sm font-medium text-slate-300;
+}
+
+.card-hover {
+  @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-xl;
+}
+
+.icon-box {
+  @apply flex items-center justify-center rounded-2xl shadow-lg;
+  background: linear-gradient(135deg, #6366f1, #9333ea);
+  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+}
+
+/* ── Custom scrollbar ──────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ── Focus ring ────────────────────────────────────────── */
+.focus-ring:focus-visible {
+  outline: 2px solid rgb(37, 99, 235);
+  outline-offset: 2px;
+}
+
+/* ── Skeleton loading ──────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.04) 25%, rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0.04) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 1rem;
+}
