@@ -23,7 +23,7 @@ function RoleBasedRedirect() {
 // App shell with navbar
 function AppShell({ children }) {
   return (
-    <div className="bg-gradient-mesh" style={{ minHeight: '100vh' }}>
+    <div className="bg-page" style={{ minHeight: '100vh' }}>
       <Navbar />
       <main>{children}</main>
     </div>

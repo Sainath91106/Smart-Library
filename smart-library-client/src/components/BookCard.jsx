@@ -1,18 +1,18 @@
 import { useState } from 'react';
 import api from '../services/api';
 
-function BookCard({ 
+function BookCard({
   bookId,
-  title, 
-  author, 
+  title,
+  author,
   category,
   description,
   coverImage,
   availableCopies,
-  aiSummary: initialAiSummary, 
-  onIssue, 
-  issuing, 
-  showIssueButton = true 
+  aiSummary: initialAiSummary,
+  onIssue,
+  issuing,
+  showIssueButton = true,
 }) {
   const inStock = availableCopies > 0;
   const [imageError, setImageError] = useState(false);
@@ -23,11 +23,11 @@ function BookCard({
   const [summaryError, setSummaryError] = useState('');
 
   const handleGenerateSummary = async () => {
-    if (aiSummary) return; // Don't regenerate if summary already exists
-    
+    if (aiSummary) return;
+
     setGeneratingSummary(true);
     setSummaryError('');
-    
+
     try {
       const response = await api.post('/ai/summary', { bookId });
       setAiSummary(response.data.summary);
@@ -35,14 +35,13 @@ function BookCard({
     } catch (error) {
       const errorData = error.response?.data;
       let errorMessage = errorData?.message || 'Failed to generate summary';
-      
-      // Add detailed information for rate limit errors
+
       if (error.response?.status === 429) {
         errorMessage = `${errorMessage} ${errorData?.details || 'Please wait 60 seconds and try again.'}`;
       } else if (errorData?.details) {
         errorMessage = `${errorMessage} ${errorData.details}`;
       }
-      
+
       setSummaryError(errorMessage);
       console.error('AI Summary Error:', error);
     } finally {
@@ -51,39 +50,35 @@ function BookCard({
   };
 
   return (
-    <article className="bg-white animate-fade-in-up card-hover relative flex flex-col overflow-hidden rounded-2xl transition-all duration-300 group hover:shadow-2xl shadow-xl border-2 border-slate-200">
-      {/* Cover Image */}
-      <div className="relative h-56 overflow-hidden bg-gradient-to-br from-indigo-100 to-purple-100">
+    <article className="bg-white animate-fade-in-up card-hover relative flex flex-col overflow-hidden rounded-2xl transition-all duration-300 group shadow-sm border border-[#E5E7EB]">
+      <div className="relative h-56 overflow-hidden bg-[#F3F4F6]">
         {coverImage && !imageError ? (
           <img
             src={coverImage}
             alt={title}
             onError={() => setImageError(true)}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="flex items-center justify-center h-full text-7xl">
-            📚
-          </div>
+          <div className="flex items-center justify-center h-full text-7xl">📚</div>
         )}
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-slate-900/20 to-transparent" />
-        
-        {/* Category badge */}
+
+        <div className="absolute inset-0 bg-black/20" />
+
         {category && (
           <div className="absolute top-3 left-3">
-            <span className="px-3 py-1.5 text-xs font-extrabold rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg border-2 border-white/30">
+            <span className="px-3 py-1.5 text-xs font-extrabold rounded-full bg-[#2563EB] text-white border border-white/40">
               {category}
             </span>
           </div>
         )}
-        
-        {/* Stock indicator */}
+
         <div className="absolute top-3 right-3">
           <span
-            className={`px-3 py-1.5 text-xs font-extrabold rounded-full shadow-lg border-2 ${inStock
-              ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white border-white/30'
-              : 'bg-gradient-to-r from-red-500 to-rose-500 text-white border-white/30'
+            className={`px-3 py-1.5 text-xs font-extrabold rounded-full border ${
+              inStock
+                ? 'bg-[#10B981] text-white border-white/40'
+                : 'bg-[#EF4444] text-white border-white/40'
             }`}
           >
             {inStock ? `${availableCopies} left` : 'Out of stock'}
@@ -91,28 +86,26 @@ function BookCard({
         </div>
       </div>
 
-      {/* Content */}
       <div className="flex flex-col flex-1 p-5">
-        <h3 className="text-lg font-extrabold leading-tight text-slate-900 line-clamp-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-indigo-600 group-hover:to-purple-600 transition-all">
+        <h3 className="text-lg font-extrabold leading-tight text-[#111827] line-clamp-2 group-hover:text-[#2563EB] transition-colors">
           {title}
         </h3>
-        <p className="mt-2 text-sm text-slate-600 flex items-center gap-1.5 font-medium">
+        <p className="mt-2 text-sm text-[#6B7280] flex items-center gap-1.5 font-medium">
           <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
           </svg>
           {author}
         </p>
 
-        {/* Description */}
         {description && (
           <div className="mt-3 flex-1">
-            <p className={`text-sm text-slate-600 leading-relaxed ${expanded ? '' : 'line-clamp-3'}`}>
+            <p className={`text-sm text-[#6B7280] leading-relaxed ${expanded ? '' : 'line-clamp-3'}`}>
               {description}
             </p>
             {description.length > 150 && (
               <button
                 onClick={() => setExpanded(!expanded)}
-                className="mt-1.5 text-xs text-indigo-600 hover:text-indigo-700 transition-colors font-bold"
+                className="mt-1.5 text-xs text-[#2563EB] hover:text-[#1D4ED8] transition-colors font-bold"
               >
                 {expanded ? 'Show less' : 'Read more'}
               </button>
@@ -120,13 +113,12 @@ function BookCard({
           </div>
         )}
 
-        {/* AI Summary Section */}
         <div className="mt-4">
           {!aiSummary ? (
             <button
               onClick={handleGenerateSummary}
               disabled={generatingSummary}
-              className="w-full py-2.5 px-4 rounded-xl text-sm font-bold transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600"
+              className="w-full py-2.5 px-4 rounded-xl text-sm font-bold transition-all shadow-sm hover:shadow disabled:opacity-50 disabled:cursor-not-allowed bg-[#2563EB] text-white hover:bg-[#1D4ED8]"
             >
               {generatingSummary ? (
                 <span className="flex items-center justify-center gap-2">
@@ -137,40 +129,36 @@ function BookCard({
                   Generating AI Summary...
                 </span>
               ) : (
-                <span className="flex items-center justify-center gap-2">
-                  ✨ Generate AI Summary
-                </span>
+                <span className="flex items-center justify-center gap-2">✨ Generate AI Summary</span>
               )}
             </button>
           ) : !showAiSummary ? (
             <button
               onClick={() => setShowAiSummary(true)}
-              className="w-full py-2.5 px-4 rounded-xl text-sm font-bold transition-all shadow-md hover:shadow-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600"
+              className="w-full py-2.5 px-4 rounded-xl text-sm font-bold transition-all shadow-sm hover:shadow bg-[#2563EB] text-white hover:bg-[#1D4ED8]"
             >
-              <span className="flex items-center justify-center gap-2">
-                ✨ Show AI Summary
-              </span>
+              <span className="flex items-center justify-center gap-2">✨ Show AI Summary</span>
             </button>
           ) : (
-            <div className="p-4 rounded-xl bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 shadow-md">
+            <div className="p-4 rounded-xl bg-[#F8FAFC] border border-[#E5E7EB] shadow-sm">
               <div className="flex items-start justify-between gap-2 mb-2">
                 <div className="flex items-start gap-2">
                   <span className="text-lg">✨</span>
-                  <h4 className="text-sm font-bold text-purple-700">AI Summary</h4>
+                  <h4 className="text-sm font-bold text-[#2563EB]">AI Summary</h4>
                 </div>
                 <button
                   onClick={() => setShowAiSummary(false)}
-                  className="text-xs font-bold text-purple-700 hover:text-purple-900 transition-colors"
+                  className="text-xs font-bold text-[#2563EB] hover:text-[#1D4ED8] transition-colors"
                 >
                   Hide
                 </button>
               </div>
-              <p className="text-sm text-slate-700 leading-relaxed">{aiSummary}</p>
+              <p className="text-sm text-[#111827] leading-relaxed">{aiSummary}</p>
             </div>
           )}
-          
+
           {summaryError && (
-            <div className="mt-2 p-4 rounded-xl bg-red-50 border-2 border-red-200 shadow-sm">
+            <div className="mt-2 p-4 rounded-xl bg-red-50 border border-red-200 shadow-sm">
               <div className="flex items-start gap-2">
                 <span className="text-lg">⚠️</span>
                 <div className="flex-1">
@@ -182,12 +170,11 @@ function BookCard({
           )}
         </div>
 
-        {/* Action button */}
         {showIssueButton && (
           <button
             onClick={onIssue}
             disabled={!inStock || issuing}
-            className="mt-4 w-full btn-primary py-3 shadow-lg hover:shadow-xl transition-all font-bold text-base"
+            className="mt-4 w-full btn-primary py-3 shadow-sm transition-all font-bold text-base"
           >
             {issuing ? (
               <span className="flex items-center justify-center gap-2">

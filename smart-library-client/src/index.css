@@ -1,12 +1,16 @@
 @import "tailwindcss";
 
-/* ── Design tokens - New Light Theme ─────────────────────────────────────── */
 :root {
-  --clr-primary: 99 102 241;
-  --clr-secondary: 139 92 246;
-  --clr-accent: 236 72 153;
-  --clr-success: 34 197 94;
-  --clr-warning: 251 146 60;
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-background: #f8fafc;
+  --color-card: #ffffff;
+  --color-border: #e5e7eb;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6b7280;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
 }
 
 * {
@@ -24,13 +28,12 @@ body,
 
 body {
   font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 50%, #fce7f3 100%);
-  color: #1e293b;
+  background: var(--color-background);
+  color: var(--color-text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Utility keyframes ─────────────────────────────────── */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -65,18 +68,18 @@ body {
   }
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
+@keyframes pulseSoft {
+  0%,
+  100% {
+    opacity: 1;
   }
 
-  100% {
-    background-position: 200% 0;
+  50% {
+    opacity: 0.55;
   }
 }
 
 @keyframes float {
-
   0%,
   100% {
     transform: translateY(0px);
@@ -97,7 +100,6 @@ body {
   }
 }
 
-/* ── Reusable animation classes ────────────────────────── */
 .animate-fade-in-up {
   animation: fadeInUp 0.5s ease-out both;
 }
@@ -126,163 +128,153 @@ body {
   animation: spin 1s linear infinite;
 }
 
-/* stagger children */
-.stagger>*:nth-child(1) {
+.stagger > *:nth-child(1) {
   animation-delay: 0ms;
 }
 
-.stagger>*:nth-child(2) {
+.stagger > *:nth-child(2) {
   animation-delay: 80ms;
 }
 
-.stagger>*:nth-child(3) {
+.stagger > *:nth-child(3) {
   animation-delay: 160ms;
 }
 
-.stagger>*:nth-child(4) {
+.stagger > *:nth-child(4) {
   animation-delay: 240ms;
 }
 
-.stagger>*:nth-child(5) {
+.stagger > *:nth-child(5) {
   animation-delay: 320ms;
 }
 
-.stagger>*:nth-child(6) {
+.stagger > *:nth-child(6) {
   animation-delay: 400ms;
 }
 
-.stagger>*:nth-child(7) {
+.stagger > *:nth-child(7) {
   animation-delay: 480ms;
 }
 
-.stagger>*:nth-child(8) {
+.stagger > *:nth-child(8) {
   animation-delay: 560ms;
 }
 
-.stagger>*:nth-child(9) {
+.stagger > *:nth-child(9) {
   animation-delay: 640ms;
 }
 
-/* ── Glassmorphism utility - Light Theme ─────────────────────────────── */
-.glass {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.15);
-}
-
+.glass,
 .glass-light {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 4px 16px 0 rgba(139, 92, 246, 0.1);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
 }
 
-/* ── Gradient backgrounds ──────────────────────────────── */
-.bg-gradient-mesh {
-  background:
-    radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(236, 72, 153, 0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 80%, rgba(34, 197, 94, 0.08) 0%, transparent 50%),
-    linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 50%, #fce7f3 100%);
+.bg-page {
+  background: var(--color-background);
 }
 
-.bg-gradient-brand {
-  background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+.surface {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
 }
 
-.bg-gradient-success {
-  background: linear-gradient(135deg, #22c55e, #10b981);
+.text-brand {
+  color: var(--color-primary);
 }
-
-.bg-gradient-purple {
-  background: linear-gradient(135deg, #8b5cf6, #a855f7);
-}
-
-.bg-gradient-pink {
-  background: linear-gradient(135deg, #ec4899, #f472b6);
-}
-
-.text-gradient {
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  background-image: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
-}
-
-/* ── Custom Component Classes ──────────────────────────── */
 
 .btn-primary {
-  @apply w-full rounded-xl py-3 px-4 text-sm font-semibold text-white border-0 cursor-pointer shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+  @apply w-full rounded-xl py-3 px-4 text-sm font-semibold text-white border-0 cursor-pointer transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  background: var(--color-primary);
+  box-shadow: 0 1px 2px rgba(37, 99, 235, 0.2);
 }
 
 .btn-primary:not(:disabled):hover {
-  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
-  transform: translateY(-2px);
+  background: var(--color-primary-hover);
 }
 
 .btn-success {
-  @apply w-full rounded-xl py-3 px-4 text-sm font-semibold text-white border-0 cursor-pointer shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed;
-  background: linear-gradient(135deg, #22c55e, #10b981);
-  box-shadow: 0 4px 14px rgba(34, 197, 94, 0.4);
+  @apply w-full rounded-xl py-3 px-4 text-sm font-semibold text-white border-0 cursor-pointer transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  background: var(--color-success);
+  box-shadow: 0 1px 2px rgba(16, 185, 129, 0.25);
 }
 
 .btn-success:not(:disabled):hover {
-  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.5);
-  transform: translateY(-2px);
+  filter: brightness(0.95);
+}
+
+.btn-secondary {
+  @apply rounded-xl py-3 px-4 text-sm font-semibold border border-slate-200 cursor-pointer transition-all duration-200;
+  background: #f3f4f6;
+  color: var(--color-text-primary);
+}
+
+.btn-secondary:hover {
+  background: #e5e7eb;
 }
 
 .input-field {
-  @apply w-full rounded-xl border border-slate-200 bg-white py-3 px-4 text-sm text-slate-700 outline-none transition-all duration-300 placeholder:text-slate-400 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 shadow-sm;
+  @apply w-full rounded-xl border py-3 px-4 text-sm outline-none transition-all duration-200 shadow-sm;
+  border-color: var(--color-border);
+  background: var(--color-card);
+  color: var(--color-text-primary);
+}
+
+.input-field::placeholder {
+  color: #9ca3af;
+}
+
+.input-field:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 .label-text {
-  @apply block mb-1.5 text-sm font-semibold text-slate-700;
+  @apply block mb-1.5 text-sm font-semibold;
+  color: var(--color-text-secondary);
 }
 
 .card-hover {
-  @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl;
+  @apply transition-all duration-200;
+}
+
+.card-hover:hover {
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
 }
 
 .icon-box {
-  @apply flex items-center justify-center rounded-2xl shadow-lg;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+  @apply flex items-center justify-center rounded-2xl;
+  background: var(--color-primary);
+  color: #ffffff;
 }
 
-/* ── Custom scrollbar - Light Theme ──────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(148, 163, 184, 0.1);
+  background: #f1f5f9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.3);
+  background: #cbd5e1;
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.5);
+  background: #94a3b8;
 }
 
-/* ── Focus ring ────────────────────────────────────────── */
 .focus-ring:focus-visible {
-  outline: 2px solid rgb(99, 102, 241);
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
-/* ── Skeleton loading - Light Theme ──────────────────────────────────── */
 .skeleton {
-  background: linear-gradient(90deg, rgba(148, 163, 184, 0.1) 25%, rgba(148, 163, 184, 0.2) 50%, rgba(148, 163, 184, 0.1) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
+  background: #e5e7eb;
+  animation: pulseSoft 1.5s ease-in-out infinite;
   border-radius: 1rem;
 }

@@ -105,11 +105,8 @@ function Books() {
     <section className="max-w-7xl mx-auto px-6 py-8">
       {/* Page header */}
       <div className="animate-fade-in-up">
-        <h1 className="text-4xl font-extrabold">
-          📚 <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Library</span>{' '}
-          <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-            Catalog
-          </span>
+        <h1 className="text-4xl font-extrabold text-[#111827]">
+          📚 <span className="text-[#2563EB]">Library</span> Catalog
         </h1>
         <p className="mt-2 text-lg text-slate-600 font-medium">
           Browse and issue books from the library collection.
@@ -118,20 +115,20 @@ function Books() {
         {/* Stats */}
         {!loading && books.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-3">
-            <div className="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-50 to-purple-50 border-2 border-indigo-300 shadow-md">
-              <span className="text-sm text-slate-700 font-medium">Total Books: </span>
-              <span className="text-sm font-extrabold text-indigo-600">{books.length}</span>
+            <div className="px-4 py-2 rounded-xl bg-white border border-[#E5E7EB] shadow-sm">
+              <span className="text-sm text-[#6B7280] font-medium">Total Books: </span>
+              <span className="text-sm font-extrabold text-[#2563EB]">{books.length}</span>
             </div>
-            <div className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-emerald-300 shadow-md">
-              <span className="text-sm text-slate-700 font-medium">Available: </span>
-              <span className="text-sm font-extrabold text-emerald-600">
+            <div className="px-4 py-2 rounded-xl bg-white border border-[#E5E7EB] shadow-sm">
+              <span className="text-sm text-[#6B7280] font-medium">Available: </span>
+              <span className="text-sm font-extrabold text-[#10B981]">
                 {books.filter(b => b.availableCopies > 0).length}
               </span>
             </div>
             {search && (
-              <div className="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-300 shadow-md">
-                <span className="text-sm text-slate-700 font-medium">Search Results: </span>
-                <span className="text-sm font-extrabold text-purple-600">{visibleBooks.length}</span>
+              <div className="px-4 py-2 rounded-xl bg-white border border-[#E5E7EB] shadow-sm">
+                <span className="text-sm text-[#6B7280] font-medium">Search Results: </span>
+                <span className="text-sm font-extrabold text-[#2563EB]">{visibleBooks.length}</span>
               </div>
             )}
           </div>
@@ -139,7 +136,7 @@ function Books() {
       </div>
 
       {/* Filters bar */}
-      <div className="bg-white animate-fade-in-up mt-6 flex flex-wrap items-center gap-3 rounded-2xl p-5 shadow-xl border-2 border-slate-200">
+      <div className="bg-white animate-fade-in-up mt-6 flex flex-wrap items-center gap-3 rounded-2xl p-5 shadow-sm border border-[#E5E7EB]">
         {/* Search */}
         <div className="relative flex-1 min-w-[200px]">
           <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 pointer-events-none" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -150,7 +147,7 @@ function Books() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search title, author, category…"
-            className="input-field pl-11 pr-10 focus-ring border-2 border-slate-300 text-slate-900 placeholder-slate-500 font-medium"
+            className="input-field pl-11 pr-10 focus-ring border border-[#E5E7EB] text-[#111827] placeholder-[#9CA3AF] font-medium"
           />
           {search && (
             <button
@@ -169,7 +166,7 @@ function Books() {
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="input-field cursor-pointer min-w-[140px] focus-ring border-2 border-slate-300 text-slate-900 font-bold"
+          className="input-field cursor-pointer min-w-[140px] focus-ring border border-[#E5E7EB] text-[#111827] font-bold"
         >
           {categories.map((cat) => (
             <option key={cat} value={cat} className="bg-white text-slate-900 font-medium">
@@ -182,7 +179,7 @@ function Books() {
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
-          className="input-field cursor-pointer min-w-[140px] focus-ring border-2 border-slate-300 text-slate-900 font-bold"
+          className="input-field cursor-pointer min-w-[140px] focus-ring border border-[#E5E7EB] text-[#111827] font-bold"
         >
           <option value="recent" className="bg-white text-slate-900 font-medium">Recent First</option>
           <option value="title" className="bg-white text-slate-900 font-medium">Title A-Z</option>
@@ -191,7 +188,7 @@ function Books() {
         </select>
 
         {/* Available toggle */}
-        <label className="flex items-center gap-2.5 rounded-xl border-2 border-indigo-300 bg-gradient-to-r from-indigo-50 to-purple-50 px-4 py-2.5 text-sm text-slate-800 font-bold cursor-pointer hover:from-indigo-100 hover:to-purple-100 transition-all shadow-md select-none">
+        <label className="flex items-center gap-2.5 rounded-xl border border-[#E5E7EB] bg-[#F3F4F6] px-4 py-2.5 text-sm text-[#111827] font-bold cursor-pointer hover:bg-[#E5E7EB] transition-all shadow-sm select-none">
           <div className="relative w-10 h-6">
             <input
               type="checkbox"
@@ -199,7 +196,7 @@ function Books() {
               onChange={(e) => setOnlyAvailable(e.target.checked)}
               className="sr-only peer"
             />
-            <div className="w-10 h-6 rounded-full bg-slate-300 peer-checked:bg-gradient-to-r peer-checked:from-indigo-500 peer-checked:to-purple-500 transition-all shadow-inner" />
+            <div className="w-10 h-6 rounded-full bg-slate-300 peer-checked:bg-[#2563EB] transition-all shadow-inner" />
             <div className="absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow-lg transition-all peer-checked:translate-x-4" />
           </div>
           Available only
@@ -212,19 +209,19 @@ function Books() {
           <span className="text-slate-700 font-bold">Active filters:</span>
           <div className="flex flex-wrap gap-2">
             {search && (
-              <span className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700 border-2 border-indigo-300 font-bold flex items-center gap-2 shadow-md">
+              <span className="px-3 py-1.5 rounded-lg bg-[#EFF6FF] text-[#1D4ED8] border border-[#BFDBFE] font-bold flex items-center gap-2 shadow-sm">
                 Search: "{search}"
-                <button onClick={() => setSearch('')} className="hover:text-indigo-900 font-extrabold text-base">×</button>
+                <button onClick={() => setSearch('')} className="hover:text-[#1E3A8A] font-extrabold text-base">×</button>
               </span>
             )}
             {category !== 'all' && (
-              <span className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 border-2 border-purple-300 font-bold flex items-center gap-2 shadow-md">
+              <span className="px-3 py-1.5 rounded-lg bg-[#F3F4F6] text-[#111827] border border-[#E5E7EB] font-bold flex items-center gap-2 shadow-sm">
                 Category: {category}
-                <button onClick={() => setCategory('all')} className="hover:text-purple-900 font-extrabold text-base">×</button>
+                <button onClick={() => setCategory('all')} className="hover:text-[#111827] font-extrabold text-base">×</button>
               </span>
             )}
             {onlyAvailable && (
-              <span className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-emerald-100 to-teal-100 text-emerald-700 border-2 border-emerald-300 font-bold flex items-center gap-2 shadow-md">
+              <span className="px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold flex items-center gap-2 shadow-sm">
                 Available only
                 <button onClick={() => setOnlyAvailable(false)} className="hover:text-emerald-900 font-extrabold text-base">×</button>
               </span>
@@ -244,7 +241,7 @@ function Books() {
       )}
 
       {error && (
-        <div className="animate-fade-in mt-6 rounded-xl bg-gradient-to-r from-red-50 to-rose-50 p-4 text-base text-red-700 border-2 border-red-300 font-medium shadow-md">
+        <div className="animate-fade-in mt-6 rounded-xl bg-red-50 p-4 text-base text-red-700 border border-red-200 font-medium shadow-sm">
           {error}
         </div>
       )}
@@ -276,7 +273,7 @@ function Books() {
               />
             ))}
           </div>
-          <div className="mt-6 h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent" />
+          <div className="mt-6 h-px bg-[#E5E7EB]" />
         </div>
       )}
 
@@ -284,8 +281,8 @@ function Books() {
       {loading ? (
         <div className="stagger mt-8 grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-            <div key={n} className="bg-white animate-fade-in-up rounded-2xl overflow-hidden shadow-xl border-2 border-slate-200">
-              <div className="skeleton h-56\" />
+            <div key={n} className="bg-white animate-fade-in-up rounded-2xl overflow-hidden shadow-sm border border-[#E5E7EB]">
+              <div className="skeleton h-56" />
               <div className="p-5 space-y-3">
                 <div className="skeleton h-6 w-3/4" />
                 <div className="skeleton h-4 w-1/2" />
@@ -329,7 +326,7 @@ function Books() {
 
       {!loading && visibleBooks.length === 0 && (
         <div className="animate-fade-in mt-16 flex flex-col items-center text-center">
-          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center mb-5 border-2 border-slate-300 shadow-xl">
+          <div className="w-24 h-24 rounded-full bg-slate-100 flex items-center justify-center mb-5 border border-[#E5E7EB] shadow-sm">
             <span className="text-5xl">📭</span>
           </div>
           <p className="text-2xl font-extrabold text-slate-900">No books found</p>
@@ -345,7 +342,7 @@ function Books() {
                 setCategory('all');
                 setOnlyAvailable(false);
               }}
-              className="mt-6 btn-primary py-3 px-8 text-base shadow-xl"
+              className="mt-6 btn-primary py-3 px-8 text-base shadow-sm"
             >
               Clear all filters
             </button>
@@ -357,4 +354,3 @@ function Books() {
 }
 
 export default Books;
-

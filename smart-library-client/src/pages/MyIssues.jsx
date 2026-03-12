@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import api from '../services/api';
 
 const statusClasses = {
-  issued: 'bg-gradient-to-r from-amber-100 to-orange-100 text-amber-700 border-2 border-amber-300',
-  returned: 'bg-gradient-to-r from-emerald-100 to-teal-100 text-emerald-700 border-2 border-emerald-300',
-  overdue: 'bg-gradient-to-r from-red-100 to-rose-100 text-red-700 border-2 border-red-300',
-  default: 'bg-gradient-to-r from-slate-100 to-slate-200 text-slate-700 border-2 border-slate-300',
+  issued: 'bg-amber-50 text-amber-700 border border-amber-200',
+  returned: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
+  overdue: 'bg-red-50 text-red-700 border border-red-200',
+  default: 'bg-slate-100 text-slate-700 border border-slate-200',
 };
 
 function MyIssues() {
@@ -92,23 +92,6 @@ function MyIssues() {
     }
   };
 
-  const getStatusBadgeColor = (issue) => {
-    if (issue.status === 'returned') {
-      return 'text-emerald-600';
-    }
-    
-    const daysInfo = getDaysInfo(issue);
-    if (!daysInfo) return 'text-slate-600';
-    
-    if (daysInfo.type === 'overdue') {
-      return 'text-red-600';
-    } else if (daysInfo.days <= 2) {
-      return 'text-yellow-600';
-    } else {
-      return 'text-emerald-600';
-    }
-  };
-
   const getStatusClass = (status) => statusClasses[status] || statusClasses.default;
   
   const filteredIssues = issues.filter(issue => {
@@ -124,11 +107,8 @@ function MyIssues() {
     <section className="max-w-7xl mx-auto px-6 py-8">
       {/* Header */}
       <div className="animate-fade-in-up">
-        <h1 className="text-4xl font-extrabold">
-          📖 <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">My</span>{' '}
-          <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-            Issued Books
-          </span>
+        <h1 className="text-4xl font-extrabold text-[#111827]">
+          📖 <span className="text-[#2563EB]">My Issued Books</span>
         </h1>
         <p className="mt-2 text-lg text-slate-600 font-medium">
           Track your borrowed books and return them on time.
@@ -140,30 +120,30 @@ function MyIssues() {
         <div className="animate-fade-in-up mt-6 flex flex-wrap items-center gap-3">
           <button
             onClick={() => setFilter('active')}
-            className={`px-5 py-2.5 rounded-xl text-sm font-extrabold transition-all shadow-md ${
+            className={`px-5 py-2.5 rounded-xl text-sm font-extrabold transition-all shadow-sm ${
               filter === 'active'
-                ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white border-2 border-indigo-600 shadow-indigo-500/20'
-                : 'bg-white text-slate-700 border-2 border-slate-300 hover:border-indigo-400'
+                ? 'bg-[#2563EB] text-white border border-[#2563EB]'
+                : 'bg-white text-slate-700 border border-[#E5E7EB] hover:border-[#2563EB]'
             }`}
           >
             📚 Active ({activeCount})
           </button>
           <button
             onClick={() => setFilter('returned')}
-            className={`px-5 py-2.5 rounded-xl text-sm font-extrabold transition-all shadow-md ${
+            className={`px-5 py-2.5 rounded-xl text-sm font-extrabold transition-all shadow-sm ${
               filter === 'returned'
-                ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white border-2 border-emerald-600 shadow-emerald-500/20'
-                : 'bg-white text-slate-700 border-2 border-slate-300 hover:border-emerald-400'
+                ? 'bg-[#2563EB] text-white border border-[#2563EB]'
+                : 'bg-white text-slate-700 border border-[#E5E7EB] hover:border-[#2563EB]'
             }`}
           >
             ✅ History ({returnedCount})
           </button>
           <button
             onClick={() => setFilter('all')}
-            className={`px-5 py-2.5 rounded-xl text-sm font-extrabold transition-all shadow-md ${
+            className={`px-5 py-2.5 rounded-xl text-sm font-extrabold transition-all shadow-sm ${
               filter === 'all'
-                ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white border-2 border-purple-600 shadow-purple-500/20'
-                : 'bg-white text-slate-700 border-2 border-slate-300 hover:border-purple-400'
+                ? 'bg-[#2563EB] text-white border border-[#2563EB]'
+                : 'bg-white text-slate-700 border border-[#E5E7EB] hover:border-[#2563EB]'
             }`}
           >
             📋 All ({issues.length})
@@ -172,7 +152,7 @@ function MyIssues() {
       )}
 
       {error && (
-        <div className="animate-fade-in mt-6 rounded-xl bg-gradient-to-r from-red-50 to-rose-50 p-4 text-base text-red-700 border-2 border-red-300 font-medium shadow-md">
+        <div className="animate-fade-in mt-6 rounded-xl bg-red-50 p-4 text-base text-red-700 border border-red-200 font-medium shadow-sm">
           {error}
         </div>
       )}
@@ -185,7 +165,7 @@ function MyIssues() {
         </div>
       ) : issues.length === 0 ? (
         <div className="animate-fade-in mt-16 flex flex-col items-center text-center">
-          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center mb-5 border-2 border-slate-300 shadow-xl">
+          <div className="w-24 h-24 rounded-full bg-slate-100 flex items-center justify-center mb-5 border border-[#E5E7EB] shadow-sm">
             <span className="text-5xl">📭</span>
           </div>
           <p className="text-xl font-extrabold text-slate-900">No issued books</p>
@@ -193,7 +173,7 @@ function MyIssues() {
         </div>
       ) : filteredIssues.length === 0 ? (
         <div className="animate-fade-in mt-16 flex flex-col items-center text-center">
-          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center mb-5 border-2 border-slate-300 shadow-xl">
+          <div className="w-24 h-24 rounded-full bg-slate-100 flex items-center justify-center mb-5 border border-[#E5E7EB] shadow-sm">
             <span className="text-5xl">🔍</span>
           </div>
           <p className="text-xl font-extrabold text-slate-900">
@@ -208,11 +188,11 @@ function MyIssues() {
       ) : (
         <>
           {/* Desktop table */}
-          <div className="hidden md:block bg-white animate-fade-in-up mt-8 overflow-hidden rounded-2xl border-2 border-slate-200 shadow-xl">
+          <div className="hidden md:block bg-white animate-fade-in-up mt-8 overflow-hidden rounded-2xl border border-[#E5E7EB] shadow-sm">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm border-collapse">
                 <thead>
-                  <tr className="border-b-2 border-slate-200 bg-gradient-to-r from-slate-50 to-slate-100">
+                  <tr className="border-b border-[#E5E7EB] bg-slate-50">
                     {['Book', 'Author', 'Due Date', 'Status', 'Penalty', 'Action'].map((h) => (
                       <th key={h} className="p-4 md:px-6 text-xs font-extrabold uppercase tracking-wider text-slate-700">
                         {h}
@@ -226,7 +206,7 @@ function MyIssues() {
                     return (
                       <tr
                         key={issue._id}
-                        className="animate-fade-in-up border-t-2 border-slate-100 transition-colors hover:bg-slate-50"
+                        className="animate-fade-in-up border-t border-slate-100 transition-colors hover:bg-slate-50"
                         style={{ animationDelay: `${idx * 60}ms` }}
                       >
                         <td className="p-4 md:px-6 font-extrabold text-slate-900">{issue.bookId?.title || '—'}</td>
@@ -259,7 +239,7 @@ function MyIssues() {
                         <td className="p-4 md:px-6">
                           <div className="flex flex-col gap-1.5">
                             <span
-                              className={`inline-block rounded-full px-3 py-1 text-xs font-extrabold shadow-md ${getStatusClass(issue.status)}`}
+                              className={`inline-block rounded-full px-3 py-1 text-xs font-extrabold shadow-sm ${getStatusClass(issue.status)}`}
                             >
                               {issue.status}
                             </span>
@@ -299,7 +279,7 @@ function MyIssues() {
                           <button
                             onClick={() => handleReturn(issue._id)}
                             disabled={!canReturn || returningId === issue._id}
-                            className="btn-primary py-2 px-4 shadow-md text-xs w-auto min-w-[80px]"
+                            className="btn-primary py-2 px-4 shadow-sm text-xs w-auto min-w-[80px]"
                           >
                             {returningId === issue._id ? (
                               <span className="flex items-center justify-center gap-1.5">
@@ -327,14 +307,14 @@ function MyIssues() {
             {filteredIssues.map((issue) => {
               const canReturn = issue.status !== 'returned';
               return (
-                <div key={issue._id} className="bg-white animate-fade-in-up rounded-2xl p-5 border-2 border-slate-200 shadow-xl">
+                <div key={issue._id} className="bg-white animate-fade-in-up rounded-2xl p-5 border border-[#E5E7EB] shadow-sm">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
                       <p className="font-extrabold text-slate-900 line-clamp-1 text-base">{issue.bookId?.title || '—'}</p>
                       <p className="mt-1 text-sm text-slate-600 line-clamp-1 font-medium">{issue.bookId?.author || '—'}</p>
                     </div>
                     <span
-                      className={`shrink-0 rounded-full px-3 py-1 text-xs font-extrabold shadow-md ${getStatusClass(issue.status)}`}
+                      className={`shrink-0 rounded-full px-3 py-1 text-xs font-extrabold shadow-sm ${getStatusClass(issue.status)}`}
                     >
                       {issue.status}
                     </span>
@@ -344,7 +324,7 @@ function MyIssues() {
                   {isOverdue(issue) && (() => {
                     const daysInfo = getDaysInfo(issue);
                     return (
-                      <div className="mt-3 px-3 py-2.5 rounded-xl bg-gradient-to-r from-red-50 to-rose-50 border-2 border-red-300 flex items-center gap-2 shadow-md">
+                      <div className="mt-3 px-3 py-2.5 rounded-xl bg-red-50 border border-red-200 flex items-center gap-2 shadow-sm">
                         <svg className="w-4 h-4 text-red-600 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                         </svg>
@@ -398,7 +378,7 @@ function MyIssues() {
                     <button
                       onClick={() => handleReturn(issue._id)}
                       disabled={!canReturn || returningId === issue._id}
-                      className="btn-primary py-2.5 px-5 shadow-lg text-sm w-auto shrink-0 font-extrabold"
+                      className="btn-primary py-2.5 px-5 shadow-sm text-sm w-auto shrink-0 font-extrabold"
                     >
                       {returningId === issue._id ? 'Returning…' : 'Return'}
                     </button>
