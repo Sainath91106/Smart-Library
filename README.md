@@ -183,7 +183,7 @@ npm install
 cp .env.example .env
 
 # Configure your environment variables
-# Edit .env file with your MongoDB URI and JWT secret
+# Edit .env file with your MongoDB URI, JWT secret, and one AI provider key
 ```
 
 **Environment Variables (.env)**
@@ -191,6 +191,9 @@ cp .env.example .env
 PORT=5001
 MONGO_URI=mongodb://localhost:27017/smart-library
 JWT_SECRET=your_super_secret_jwt_key_here
+OPENAI_API_KEY=your_openai_api_key_here
+# OR
+GEMINI_API_KEY=your_gemini_api_key_here
 NODE_ENV=development
 ```
 
@@ -225,7 +228,7 @@ cp .env.example .env
 
 **Environment Variables (.env)**
 ```env
-VITE_API_BASE_URL=http://localhost:5001/api
+VITE_API_URL=http://localhost:5001/api
 ```
 
 **Start the Development Server**

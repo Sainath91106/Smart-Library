@@ -47,6 +47,19 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Validate JWT on hydration; stale/invalid tokens should not be treated as authenticated.
+    if (token) {
+      const decoded = decodeToken(token);
+      const isExpired = !decoded || (decoded.exp && decoded.exp * 1000 <= Date.now());
+
+      if (isExpired) {
+        setToken(null);
+        setUser(null);
+        setLoading(false);
+        return;
+      }
+    }
+
     if (token && user) {
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));

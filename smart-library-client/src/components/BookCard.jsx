@@ -18,6 +18,7 @@ function BookCard({
   const [imageError, setImageError] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [aiSummary, setAiSummary] = useState(initialAiSummary || '');
+  const [showAiSummary, setShowAiSummary] = useState(false);
   const [generatingSummary, setGeneratingSummary] = useState(false);
   const [summaryError, setSummaryError] = useState('');
 
@@ -30,6 +31,7 @@ function BookCard({
     try {
       const response = await api.post('/ai/summary', { bookId });
       setAiSummary(response.data.summary);
+      setShowAiSummary(true);
     } catch (error) {
       const errorData = error.response?.data;
       let errorMessage = errorData?.message || 'Failed to generate summary';
@@ -140,11 +142,28 @@ function BookCard({
                 </span>
               )}
             </button>
+          ) : !showAiSummary ? (
+            <button
+              onClick={() => setShowAiSummary(true)}
+              className="w-full py-2.5 px-4 rounded-xl text-sm font-bold transition-all shadow-md hover:shadow-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600"
+            >
+              <span className="flex items-center justify-center gap-2">
+                ✨ Show AI Summary
+              </span>
+            </button>
           ) : (
             <div className="p-4 rounded-xl bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 shadow-md">
-              <div className="flex items-start gap-2 mb-2">
-                <span className="text-lg">✨</span>
-                <h4 className="text-sm font-bold text-purple-700">AI Summary</h4>
+              <div className="flex items-start justify-between gap-2 mb-2">
+                <div className="flex items-start gap-2">
+                  <span className="text-lg">✨</span>
+                  <h4 className="text-sm font-bold text-purple-700">AI Summary</h4>
+                </div>
+                <button
+                  onClick={() => setShowAiSummary(false)}
+                  className="text-xs font-bold text-purple-700 hover:text-purple-900 transition-colors"
+                >
+                  Hide
+                </button>
               </div>
               <p className="text-sm text-slate-700 leading-relaxed">{aiSummary}</p>
             </div>
@@ -194,4 +213,3 @@ function BookCard({
 }
 
 export default BookCard;
-
